@@ -12,12 +12,18 @@ class SearchBar extends Component {
         });
     }
 
+    onPhotoSearchSubmit = (e) => {
+        e.preventDefault();
+
+        this.props.onPhotoSearch(this.state.image);
+    }
+
     render() {
         const { image } = this.state;
         return (
             <div className="ui segment">
-                <form class="ui form">
-                    <div class="field">
+                <form onSubmit={this.onPhotoSearchSubmit} className="ui form">
+                    <div className="field">
                         <label>Search Photos</label>
                         <input type="text" value={image} placeholder="search your photos" onChange={this.onInputChange} />
                     </div>
