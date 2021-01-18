@@ -1,11 +1,12 @@
 import React from 'react';
+import './PhotoListItems.css';
 
-
-const PhotoListItems = ({photo}) => {
+const PhotoListItems = ({photo, selectedImage}) => {
     return (
-        <div>
-            <h1>{photo.id}</h1>
-            {console.log(photo)}
+        <div className="searchbarTop">
+            <div onClick={() => selectedImage(photo) }>
+                <img className="img__size" src={photo.urls.regular} alt={photo.alt_description}/>
+            </div>
         </div>
     );
 }

@@ -2,13 +2,16 @@ import React from 'react';
 import SearchBar from './searchBar/SearchBar';
 import PhotoList from './photo/PhotoList';
 import Unsplash from './apis/Unsplash';
+import './App.css';
+import ViewPhoto from './photo/ViewPhoto';
+
 
 class App extends React.Component {
 
     state = {
-        photos: []
+        photos: [],
+        selectedPhoto: null
     }
-
 
     onPhotoSearch = async (photo) => {
         const response = await Unsplash.get('/photos', {
@@ -18,17 +21,30 @@ class App extends React.Component {
         });
 
         this.setState({
-             photos: response.data.results
+             photos: response.data.results,
+             selectedPhoto: response.data.results[0]
         });
+    };
 
-    }
+    handleSelectedPhoto = (photo) => {
+        this.setState({
+            selectedPhoto: photo
+        }); 
+    };
 
     render(){
-        const { photos } = this.state;
+        const { photos, selectedPhoto } = this.state;
         return(
-            <div className="ui container">
-                <SearchBar onPhotoSearch={this.onPhotoSearch} />
-                <PhotoList photos={photos} />
+            <div className="container">
+                <div className="searchbarTop">
+                    <SearchBar onPhotoSearch={this.onPhotoSearch} />
+                </div>
+                <div>
+                    <ViewPhoto selectedPhoto={selectedPhoto} />
+                </div>
+                <div>
+                    <PhotoList photos={photos} selectedImage={this.handleSelectedPhoto} />
+                </div>
             </div>
         );
     }
